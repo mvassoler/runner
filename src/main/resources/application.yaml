@@ -24,5 +24,3 @@ logging:
     org.springframework.web: debug
     root: info
 
-springdoc:
-  packages-to-scan: com.mavassoler.runner.runner

@@ -1,6 +1,9 @@
 package com.mvassoler.runner.runner.resource;
 
 import com.mvassoler.runner.runner.domain.Prova;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,10 +24,17 @@ import static com.mvassoler.runner.runner.grant.RolesGrant.UPDATE_PROVA;
 
 @RestController
 @RequestMapping("/prova")
+@Tag(name = "Provas")
 public class ProvaResource {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("(" + CREATE_PROVA + ") or (" + SUPER_USER + ")")
+    @Operation(
+            summary = "Create street race test", description = "Enter payload data correctly to create a new record",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Create record success")
+            }
+    )
     public ResponseEntity<String> insertProva(@RequestBody Prova prova) {
         prova.setId(UUID.randomUUID());
         return ResponseEntity.ok("Prova de ID " + prova.getId() + " criada");
@@ -32,6 +42,12 @@ public class ProvaResource {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("(" + UPDATE_PROVA + ") or (" + SUPER_USER + ")")
+    @Operation(
+            summary = "Update street race test", description = "Enter payload data correctly to update a record",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Update record success")
+            }
+    )
     public ResponseEntity<String> updateProva(@PathVariable UUID id, @RequestBody Prova prova) {
         prova.setId(id);
         return ResponseEntity.ok("Prova de ID " + prova.getId() + " atualizada");
@@ -40,6 +56,12 @@ public class ProvaResource {
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("(" + DELETE_PROVA + ") or (" + SUPER_USER + ")")
+    @Operation(
+            summary = "Delete street race test", description = "Enter a valid identifier to delete the record",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Delete record success")
+            }
+    )
     public ResponseEntity<String> deleteProva(@PathVariable UUID id) {
         return ResponseEntity.ok("Prova de ID " + id + " excluída");
     }

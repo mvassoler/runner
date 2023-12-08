@@ -1,5 +1,6 @@
 package com.mvassoler.runner.runner.domain;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Schema(name = "Corrida Input", description = "Payload de representação de uma prova")
 @Data
 @Builder
 @AllArgsConstructor
