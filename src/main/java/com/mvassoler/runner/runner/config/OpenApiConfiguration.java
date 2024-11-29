@@ -4,6 +4,7 @@ package com.mvassoler.runner.runner.config;
 import com.mvassoler.runner.runner.domain.Corrida;
 import com.mvassoler.runner.runner.domain.ErrorDetailsDTO;
 import com.mvassoler.runner.runner.domain.Prova;
+import com.mvassoler.runner.runner.domain.Vo2Test;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+
 @Configuration
 @SecurityScheme(
         name = "Chave Bearer",
@@ -49,7 +51,8 @@ public class OpenApiConfiguration {
                 .group("Runners")
                 .pathsToMatch(
                         "/corrida/**",
-                        "/prova/**"
+                        "/prova/**",
+                        "/vo2test/**"
                 )
                 .addOpenApiCustomizer(openApi -> {
                     openApi.info(new Info()
@@ -64,7 +67,8 @@ public class OpenApiConfiguration {
                             ).tags(
                                     Arrays.asList(
                                             this.newTag("Provas", "API para a manutenção das provas oficiais da corrida de rua"),
-                                            this.newTag("Corridas", "API para a manutenção dos treinos da corrida de rua")
+                                            this.newTag("Corridas", "API para a manutenção dos treinos da corrida de rua"),
+                                            this.newTag("Vo2Test", "API para a manutenção dos testes de Vo2")
                                     )
                             )
 
@@ -116,11 +120,13 @@ public class OpenApiConfiguration {
 
         Map<String, Schema> corrida = ModelConverters.getInstance().read(Corrida.class);
         Map<String, Schema> prova = ModelConverters.getInstance().read(Prova.class);
+        Map<String, Schema> vo2Test = ModelConverters.getInstance().read(Vo2Test.class);
         Map<String, Schema> problemSchema = ModelConverters.getInstance().read(ErrorDetailsDTO.class);
         Map<String, Schema> problemObjectSchema = ModelConverters.getInstance().read(ErrorDetailsDTO.Object.class);
 
         schemaMap.putAll(corrida);
         schemaMap.putAll(prova);
+        schemaMap.putAll(vo2Test);
         schemaMap.putAll(problemSchema);
         schemaMap.putAll(problemObjectSchema);
 
@@ -156,6 +162,5 @@ public class OpenApiConfiguration {
 
         return apiResponseMap;
     }
-
 
 }
